@@ -1,0 +1,46 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://uws.provider.com/"
+           xmlns:tns="http://uws.provider.com/"
+           elementFormDefault="qualified">
+
+    <!-- ================================ -->
+    <!--         REQUEST ELEMENT         -->
+    <!-- ================================ -->
+    <xs:element name="PerformTransactionRequest" type="tns:PerformTransactionRequest"/>
+
+    <xs:complexType name="PerformTransactionRequest">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/>
+            <xs:element name="amount" type="xs:decimal"/>
+            <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="serviceId" type="xs:int"/>
+            <xs:element name="transactionId" type="xs:int"/>
+            <xs:element name="transactionTime" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Parameter object -->
+    <xs:complexType name="Parameter">
+        <xs:sequence>
+            <xs:element name="paramKey" type="xs:string"/>
+            <xs:element name="paramValue" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ================================ -->
+    <!--         RESPONSE ELEMENT         -->
+    <!-- ================================ -->
+    <xs:element name="PerformTransactionResult" type="tns:PerformTransactionResult"/>
+
+    <xs:complexType name="PerformTransactionResult">
+        <xs:sequence>
+            <xs:element name="errorMsg" type="xs:string"/>
+            <xs:element name="status" type="xs:int"/>
+            <xs:element name="timeStamp" type="xs:string"/> <!-- string because example had invalid name -->
+            <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="providerTrnId" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

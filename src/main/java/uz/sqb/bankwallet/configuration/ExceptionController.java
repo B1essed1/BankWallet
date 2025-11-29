@@ -1,3 +1,4 @@
+/*
 package uz.sqb.bankwallet.configuration;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,3 +38,4 @@ public class ExceptionController{
     }
 }
 
+*/

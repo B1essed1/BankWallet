@@ -1,3 +1,4 @@
+/*
 
 
 package uz.sqb.bankwallet.configuration;
@@ -5,9 +6,16 @@ package uz.sqb.bankwallet.configuration;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.ObjectMapper;
+import uz.sqb.bankwallet.data.base.ResponseWrapper;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @AllArgsConstructor
@@ -16,8 +24,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        ErrorDTO problem = ErrorDTO.builder()
-                .message("Вам необходимо войти в систему для работы")
+        ResponseWrapper problem = ResponseWrapper.builder()
+                .errorMessage("Вам необходимо войти в систему для работы")
                 .build();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -25,3 +33,4 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         objectMapper.writeValue(response.getWriter(), problem);
     }
 }
+*/

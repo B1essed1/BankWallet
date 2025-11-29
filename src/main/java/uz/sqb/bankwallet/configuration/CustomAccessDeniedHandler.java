@@ -1,3 +1,4 @@
+/*
 
 package uz.sqb.bankwallet.configuration;
 
@@ -7,14 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 import uz.sqb.bankwallet.data.base.ResponseWrapper;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.AccessDeniedException;
 
 @Component
 @AllArgsConstructor
@@ -33,3 +33,4 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         objectMapper.writeValue(response.getWriter(), problem);
     }
 }
+*/

@@ -1,0 +1,63 @@
+<definitions
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://uws.provider.com/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://uws.provider.com/">
+
+    <!-- ======================= -->
+    <!-- XSD import              -->
+    <!-- ======================= -->
+    <types>
+        <xsd:schema>
+            <xsd:import namespace="http://uws.provider.com/" schemaLocation="../xsd/PerformTransaction.xsd"/>
+        </xsd:schema>
+    </types>
+
+    <!-- ======================= -->
+    <!-- Messages                -->
+    <!-- ======================= -->
+    <message name="PerformTransactionRequest">
+        <part name="parameters" element="tns:PerformTransactionArguments"/>
+    </message>
+
+    <message name="PerformTransactionResponse">
+        <part name="parameters" element="tns:PerformTransactionResult"/>
+    </message>
+
+    <!-- ======================= -->
+    <!-- Port Type (operation)   -->
+    <!-- ======================= -->
+    <portType name="UwsServicePortType">
+        <operation name="PerformTransaction">
+            <input message="tns:PerformTransactionRequest"/>
+            <output message="tns:PerformTransactionResponse"/>
+        </operation>
+    </portType>
+
+    <!-- ======================= -->
+    <!-- SOAP 1.1 Binding        -->
+    <!-- ======================= -->
+    <binding name="UwsServiceBinding" type="tns:UwsServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="PerformTransaction">
+            <soap:operation soapAction="http://uws.provider.com/PerformTransaction"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- ======================= -->
+    <!-- Service Endpoint        -->
+    <!-- ======================= -->
+    <service name="UwsService">
+        <port name="UwsServicePort" binding="tns:UwsServiceBinding">
+            <soap:address location="http://your-domain.com/uws-service"/>
+        </port>
+    </service>
+
+</definitions>
