@@ -1,16 +1,15 @@
 package uz.sqb.bankwallet.service;
 
-import com.provider.uws.Parameter;
-import com.provider.uws.PerformTransactionRequest;
-import com.provider.uws.PerformTransactionResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.sqb.bankwallet.dto.Parameter;
+import uz.sqb.bankwallet.dto.request.PerformTransactionRequest;
+import uz.sqb.bankwallet.dto.response.PerformTransactionResponse;
 import uz.sqb.bankwallet.entity.Transaction;
+import uz.sqb.bankwallet.enums.TransactionStatus;
 import uz.sqb.bankwallet.repository.TransactionRepository;
 
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +18,8 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
 
-    public PerformTransactionResult performTransaction(PerformTransactionRequest request) {
-        PerformTransactionResult result = new PerformTransactionResult();
+    public PerformTransactionResponse performTransaction(PerformTransactionRequest request) {
+        PerformTransactionResponse result = new PerformTransactionResponse();
 
         try {
             validateCredentials(request.getUsername(), request.getPassword());
@@ -29,15 +28,15 @@ public class TransactionService {
             transaction.setTransactionId((long) request.getTransactionId());
             transaction.setServiceId((long) request.getServiceId());
             transaction.setAmount(request.getAmount().longValue());
-            transaction.setTransactionTime(xmlGregorianCalendarToLocalDateTime(request.getTransactionTime()));
+            transaction.setTransactionTime(request.getTransactionTime() != null ? request.getTransactionTime() : LocalDateTime.now());
 
             extractParameters(request, transaction);
 
             Transaction savedTransaction = transactionRepository.save(transaction);
-            transaction.setStatus(Transaction.TransactionStatus.COMPLETED);
+            transaction.setStatus(TransactionStatus.SUCCESS);
             transactionRepository.save(transaction);
 
-            result.setStatus(0);
+            result.setStatus(TransactionStatus.SUCCESS.ordinal());
             result.setErrorMsg("Success");
             result.setProviderTrnId(savedTransaction.getId().intValue());
             result.setTimeStamp(LocalDateTime.now().toString());
@@ -68,15 +67,5 @@ public class TransactionService {
                 }
             }
         }
-    }
-
-    private LocalDateTime xmlGregorianCalendarToLocalDateTime(XMLGregorianCalendar calendar) {
-        if (calendar == null) {
-            return LocalDateTime.now();
-        }
-        return calendar.toGregorianCalendar()
-                .toZonedDateTime()
-                .withZoneSameInstant(ZoneId.systemDefault())
-                .toLocalDateTime();
     }
 }

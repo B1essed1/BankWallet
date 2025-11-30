@@ -1,4 +1,4 @@
-package uz.sqb.bankwallet.data.base;
+package uz.sqb.bankwallet.dto;
 
 import lombok.*;
 

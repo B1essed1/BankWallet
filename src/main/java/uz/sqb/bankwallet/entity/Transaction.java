@@ -3,6 +3,7 @@ package uz.sqb.bankwallet.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import uz.sqb.bankwallet.enums.TransactionStatus;
 
 import java.time.LocalDateTime;
 
@@ -31,10 +32,9 @@ public class Transaction {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "wallet_number")
+    @Column(name = "wallet_number", length = 20)
     private String walletNumber;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private TransactionStatus status;
 
@@ -47,7 +47,6 @@ public class Transaction {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-        status = TransactionStatus.PENDING;
     }
 
     @PreUpdate
@@ -55,10 +54,4 @@ public class Transaction {
         updatedAt = LocalDateTime.now();
     }
 
-    public enum TransactionStatus {
-        PENDING,
-        COMPLETED,
-        CANCELLED,
-        FAILED
-    }
 }

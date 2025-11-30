@@ -1,11 +1,11 @@
 package uz.sqb.bankwallet.endpoint;
 
-import com.provider.uws.PerformTransactionRequest;
-import com.provider.uws.PerformTransactionResult;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import uz.sqb.bankwallet.dto.request.PerformTransactionRequest;
+import uz.sqb.bankwallet.dto.response.PerformTransactionResponse;
 import uz.sqb.bankwallet.service.TransactionService;
 
 @Endpoint
@@ -19,9 +19,17 @@ public class TransactionEndpoint {
         this.transactionService = transactionService;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PerformTransactionArguments")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PerformTransactionRequest")
     @ResponsePayload
-    public PerformTransactionResult performTransaction(@RequestPayload PerformTransactionRequest request) {
+    public PerformTransactionResponse performTransaction(@RequestPayload PerformTransactionRequest request) {
         return transactionService.performTransaction(request);
     }
+//
+//    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetInformationRequest")
+//    @ResponsePayload
+//    public GetInformationResponse getInformation(@RequestPayload GetInformationRequest request) {
+//        return transactionService.performTransaction(request);
+//    }
+
+
 }
