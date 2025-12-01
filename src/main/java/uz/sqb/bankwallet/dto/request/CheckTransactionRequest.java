@@ -2,9 +2,10 @@ package uz.sqb.bankwallet.dto.request;
 
 import jakarta.xml.bind.annotation.*;
 import lombok.Data;
+import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
 @Data
-@XmlRootElement(name = "CheckTransactionRequest", namespace = "http://uws.provider.com/")
+@XmlRootElement(name = "CheckTransactionRequest", namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CheckTransactionRequest", propOrder = {
     "password",

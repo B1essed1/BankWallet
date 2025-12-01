@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import uz.sqb.bankwallet.dto.GenericResult;
 import uz.sqb.bankwallet.dto.Parameter;
+import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@XmlRootElement(name = "PerformTransactionResponse", namespace = "http://uws.provider.com/")
+@XmlRootElement(name = "PerformTransactionResponse",  namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PerformTransactionResponse", propOrder = {
     "errorMsg",
