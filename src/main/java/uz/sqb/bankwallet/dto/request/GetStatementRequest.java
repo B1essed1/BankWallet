@@ -24,7 +24,7 @@ public class GetStatementRequest {
     @XmlElement(required = true)
     private String username;
 
-    private int serviceId;
+    private Integer serviceId;
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "dateTime")

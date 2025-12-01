@@ -16,7 +16,11 @@ import java.time.LocalDateTime;
         "transactionTime"
 })
 public class TransactionStatementRequest {
+    @XmlElement(required = true)
+    private String password;
 
+    @XmlElement(required = true)
+    private String username;
     @XmlElement(required = true)
     private Long amount;
     @XmlElement(required = true)

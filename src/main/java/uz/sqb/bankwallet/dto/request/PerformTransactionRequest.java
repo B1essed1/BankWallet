@@ -35,9 +35,9 @@ public class PerformTransactionRequest {
 
     private List<Parameter> parameters = new ArrayList<>();
 
-    private int serviceId;
+    private Integer serviceId;
 
-    private int transactionId;
+    private Integer transactionId;
 
     @XmlElement(required = true)
     @XmlSchemaType(name = "dateTime")

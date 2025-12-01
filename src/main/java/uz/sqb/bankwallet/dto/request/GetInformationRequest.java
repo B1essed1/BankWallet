@@ -29,5 +29,5 @@ public class GetInformationRequest {
 
     private List<Parameter> parameters = new ArrayList<>();
 
-    private int serviceId;
+    private Integer serviceId;
 }

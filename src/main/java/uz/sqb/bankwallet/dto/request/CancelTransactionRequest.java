@@ -21,7 +21,7 @@ public class CancelTransactionRequest {
     @XmlElement(required = true)
     private String username;
 
-    private int serviceId;
+    private Integer serviceId;
 
-    private long transactionId;
+    private Long transactionId;
 }

@@ -21,7 +21,7 @@ public class CheckTransactionRequest {
     @XmlElement(required = true)
     private String username;
 
-    private int serviceId;
+    private Integer serviceId;
 
     private long transactionId;
 }
