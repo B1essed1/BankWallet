@@ -15,9 +15,6 @@ import java.util.List;
 @XmlRootElement(name = "CancelTransactionResponse",  namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CancelTransactionResponse", propOrder = {
-    "errorMsg",
-    "status",
-    "timeStamp",
     "parameters"
 })
 public class CancelTransactionResponse extends GenericResult {

@@ -15,9 +15,6 @@ import java.util.List;
 @XmlRootElement(name = "PerformTransactionResponse",  namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PerformTransactionResponse", propOrder = {
-    "errorMsg",
-    "status",
-    "timeStamp",
     "parameters",
     "providerTrnId"
 })

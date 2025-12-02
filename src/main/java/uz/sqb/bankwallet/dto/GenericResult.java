@@ -5,7 +5,13 @@ import lombok.Data;
 
 @Data
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class GenericResult {
+@XmlType(name = "GenericResult", propOrder = {
+        "status",
+        "errorMsg",
+        "timeStamp"
+})
+@XmlRootElement
+public  class GenericResult {
 
     @XmlElement(required = true)
     protected String errorMsg;

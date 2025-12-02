@@ -46,23 +46,10 @@ public class ExceptionWithStatusCode extends RuntimeException {
     }
 
     public static ExceptionWithStatusCode error(String messageKey, Objects[] args) {
-        return new ExceptionWithStatusCode(500, messageKey, args);
+        return new ExceptionWithStatusCode(-1, messageKey, args);
     }
 
-
-    public static ExceptionWithStatusCode badRequest(String messageKey, Objects[] args) {
-        return new ExceptionWithStatusCode(400, messageKey, args);
-    }
-
-    public static ExceptionWithStatusCode badRequest(String messageKey) {
-        return new ExceptionWithStatusCode(400, messageKey);
-    }
-
-    public static ExceptionWithStatusCode forbidden(String messageKey) {
-        return new ExceptionWithStatusCode(403, messageKey);
-    }
-
-    public static ExceptionWithStatusCode unauthorized(String messageKey) {
-        return new ExceptionWithStatusCode(401, messageKey);
+    public static ExceptionWithStatusCode error(String messageKey) {
+        return new ExceptionWithStatusCode(-1, messageKey);
     }
 }

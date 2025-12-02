@@ -15,9 +15,6 @@ import java.util.List;
 @XmlRootElement(name = "GetStatementResponse", namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetStatementResponse", propOrder = {
-    "errorMsg",
-    "status",
-    "timeStamp",
     "transactions"
 })
 public class GetStatementResponse extends GenericResult {

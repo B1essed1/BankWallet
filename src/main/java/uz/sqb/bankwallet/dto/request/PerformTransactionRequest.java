@@ -5,8 +5,6 @@ import lombok.Data;
 import uz.sqb.bankwallet.dto.Parameter;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +17,8 @@ import java.util.List;
     "amount",
     "parameters",
     "serviceId",
-    "transactionId",
-    "transactionTime"
+    "transactionId"/*,
+    "transactionTime"*/
 })
 public class PerformTransactionRequest {
 
@@ -31,15 +29,15 @@ public class PerformTransactionRequest {
     private String password;
 
     @XmlElement(required = true)
-    private BigDecimal amount;
+    private Long amount;
 
     private List<Parameter> parameters = new ArrayList<>();
 
-    private Integer serviceId;
+    private Long serviceId;
 
-    private Integer transactionId;
+    private Long transactionId;
 
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "dateTime")
-    private LocalDateTime transactionTime;
+//    @XmlElement(required = true)
+//    @XmlSchemaType(name = "dateTime")
+//    private LocalDateTime transactionTime;
 }

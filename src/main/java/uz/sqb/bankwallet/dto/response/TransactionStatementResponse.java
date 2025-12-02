@@ -14,9 +14,6 @@ import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 @XmlRootElement(name = "TransactionStatementResponse",  namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TransactionStatementResponse", propOrder = {
-        "errorMsg",
-        "status",
-        "timeStamp",
         "parameters",
         "providerTrnId"
 })
