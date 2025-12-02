@@ -74,7 +74,7 @@ docker exec -it bankwallet-postgres psql -U bankwallet_user -d bankwallet_db
 
 Once the application is running, you can access the Swagger UI at:
 ```
-http://localhost:8080/swagger-ui.html
+
 ```
 
 ## Build
@@ -89,7 +89,4 @@ mvn clean package
 - Java 21
 - PostgreSQL
 - Spring Data JPA
-- Spring Security
-- JWT Authentication
 - Lombok
-- SpringDoc OpenAPI
