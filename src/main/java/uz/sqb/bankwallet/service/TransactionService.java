@@ -13,6 +13,7 @@ import uz.sqb.bankwallet.exception.ExceptionWithStatusCode;
 import uz.sqb.bankwallet.repository.TransactionRepository;
 import uz.sqb.bankwallet.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -45,6 +46,7 @@ public class TransactionService {
         transaction.setPhoneNumber(phone);
         transaction.setWalletNumber(walletNumber);
         transaction.setStatus(TransactionStatus.SUCCESS);
+        transaction.setTransactionTime(LocalDateTime.now());
         transactionRepository.save(transaction);
 
         var wallet = user.getWallet();
