@@ -29,4 +29,7 @@ public class User {
     @XmlTransient
     private Wallet wallet;
 
+    @Column(name = "service_id")
+    private Long serviceId;
+
 }

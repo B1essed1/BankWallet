@@ -49,10 +49,5 @@ public class TransactionEndpoint {
         return transactionService.getInformation(request);
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "TransactionStatementRequest")
-    @ResponsePayload
-    public TransactionStatementResponse transactionStatement(@RequestPayload TransactionStatementRequest request) {
-        return transactionService.transactionStatement(request);
-    }
 
 }

@@ -1,7 +1,10 @@
 package uz.sqb.bankwallet.dto.request;
 
 import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
+import uz.sqb.bankwallet.dto.GenericAuthRequest;
+import uz.sqb.bankwallet.utils.LocalDateTimeAdapter;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
 import java.time.LocalDateTime;
@@ -15,12 +18,8 @@ import java.time.LocalDateTime;
         "transactionId",
         "transactionTime"
 })
-public class TransactionStatementRequest {
-    @XmlElement(required = true)
-    private String password;
+public class TransactionStatementRequest extends GenericAuthRequest {
 
-    @XmlElement(required = true)
-    private String username;
     @XmlElement(required = true)
     private Long amount;
     @XmlElement(required = true)
@@ -28,5 +27,6 @@ public class TransactionStatementRequest {
     @XmlElement(required = true)
     private String transactionId;
     @XmlElement(required = true)
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime transactionTime;
 }

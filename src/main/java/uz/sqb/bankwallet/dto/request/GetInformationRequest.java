@@ -1,8 +1,12 @@
 package uz.sqb.bankwallet.dto.request;
 
-import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
+import uz.sqb.bankwallet.dto.GenericAuthRequest;
 import uz.sqb.bankwallet.dto.Parameter;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
@@ -14,20 +18,14 @@ import java.util.List;
 @XmlRootElement(name = "GetInformationRequest",  namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetInformationRequest", propOrder = {
-    "password",
-    "username",
+
     "parameters",
     "serviceId"
 })
-public class GetInformationRequest {
+public class GetInformationRequest extends GenericAuthRequest {
 
-    @XmlElement(required = true)
-    private String password;
-
-    @XmlElement(required = true)
-    private String username;
 
     private List<Parameter> parameters = new ArrayList<>();
 
-    private Integer serviceId;
+    private Long serviceId;
 }

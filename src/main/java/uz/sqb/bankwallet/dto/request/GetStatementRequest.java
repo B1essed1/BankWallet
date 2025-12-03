@@ -1,7 +1,10 @@
 package uz.sqb.bankwallet.dto.request;
 
 import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
+import uz.sqb.bankwallet.dto.GenericAuthRequest;
+import uz.sqb.bankwallet.utils.LocalDateTimeAdapter;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
 import java.time.LocalDateTime;
@@ -10,27 +13,20 @@ import java.time.LocalDateTime;
 @XmlRootElement(name = "GetStatementRequest", namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetStatementRequest", propOrder = {
-    "password",
-    "username",
     "serviceId",
     "dateFrom",
     "dateTo"
 })
-public class GetStatementRequest {
+public class GetStatementRequest extends GenericAuthRequest {
 
     @XmlElement(required = true)
-    private String password;
+    private Long serviceId;
 
     @XmlElement(required = true)
-    private String username;
-
-    private Integer serviceId;
-
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "dateTime")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime dateFrom;
 
     @XmlElement(required = true)
-    @XmlSchemaType(name = "dateTime")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime dateTo;
 }

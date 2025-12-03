@@ -1,27 +1,24 @@
 package uz.sqb.bankwallet.dto.request;
 
-import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 import lombok.Data;
+import uz.sqb.bankwallet.dto.GenericAuthRequest;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
 @Data
 @XmlRootElement(name = "CheckTransactionRequest", namespace = PUBLIC_STRINGS.NAMESPACE_URI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CheckTransactionRequest", propOrder = {
-    "password",
-    "username",
     "serviceId",
     "transactionId"
 })
-public class CheckTransactionRequest {
+public class CheckTransactionRequest  extends GenericAuthRequest {
 
-    @XmlElement(required = true)
-    private String password;
 
-    @XmlElement(required = true)
-    private String username;
-
-    private Integer serviceId;
+    private Long serviceId;
 
     private long transactionId;
 }

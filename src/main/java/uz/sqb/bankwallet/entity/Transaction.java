@@ -8,7 +8,11 @@ import uz.sqb.bankwallet.enums.TransactionStatus;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transactions")
+@Table(
+        name = "transactions",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"transaction_id", "service_id"})}
+)
+
 @Getter
 @Setter
 public class Transaction {
@@ -17,7 +21,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "transaction_id", nullable = false, unique = true)
+    @Column(name = "transaction_id", nullable = false)
     private Long transactionId;
 
     @Column(name = "service_id", nullable = false)

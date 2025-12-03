@@ -13,5 +13,14 @@ import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 @XmlType(name = "ChangePasswordResponse", propOrder = {
 })
 public class ChangePasswordResponse extends GenericResult {
+
+
+    public static ChangePasswordResponse success() {
+        ChangePasswordResponse response = new ChangePasswordResponse();
+        response.setErrorMsg("success");
+        response.setStatus(0);
+        response.setTimeStamp(String.valueOf(System.currentTimeMillis()));
+        return response;
+    }
     // All fields inherited from GenericResult
 }

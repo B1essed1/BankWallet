@@ -22,5 +22,5 @@ public class PerformTransactionResponse extends GenericResult {
 
     private List<Parameter> parameters = new ArrayList<>();
 
-    private Integer providerTrnId;
+    private Long providerTrnId;
 }

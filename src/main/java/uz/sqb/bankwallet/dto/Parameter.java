@@ -19,4 +19,11 @@ public class Parameter {
 
     @XmlElement(required = true)
     private String paramValue;
+
+    public static Parameter setParameter(String paramKey, String paramValue) {
+        Parameter parameter = new Parameter();
+        parameter.setParamKey(paramKey);
+        parameter.setParamValue(paramValue);
+        return parameter;
+    }
 }

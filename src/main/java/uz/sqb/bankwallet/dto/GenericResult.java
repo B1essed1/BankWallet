@@ -14,10 +14,10 @@ import lombok.Data;
 public  class GenericResult {
 
     @XmlElement(required = true)
-    protected String errorMsg;
+    protected String errorMsg ;
 
     protected int status;
 
     @XmlElement(required = true)
-    protected String timeStamp;
+    protected String timeStamp = String.valueOf(System.currentTimeMillis());
 }

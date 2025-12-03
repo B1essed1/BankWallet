@@ -23,8 +23,12 @@ public class UserService {
     }
 
     public ChangePasswordResponse changePassword(ChangePasswordRequest request) {
-        ChangePasswordResponse result = new ChangePasswordResponse();
-        return result;
+        // it is there checked in interception
+        User user = userRepository.findByUsername(request.getUsername()).get();
+        user.setPassword(Utils.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return ChangePasswordResponse.success();
     }
 
 
