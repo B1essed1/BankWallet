@@ -7,6 +7,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @XmlRootElement
-public class ErrorResult extends GenericResult {
+public class ErrorResult extends ErrorResponse {
     // GenericResult already has errorMsg, status, timeStamp
 }

@@ -3,7 +3,7 @@ package uz.sqb.bankwallet.dto.response;
 import jakarta.xml.bind.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
-import uz.sqb.bankwallet.dto.GenericResult;
+import uz.sqb.bankwallet.dto.ErrorResponse;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
 @Getter
@@ -12,7 +12,7 @@ import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ChangePasswordResponse", propOrder = {
 })
-public class ChangePasswordResponse extends GenericResult {
+public class ChangePasswordResponse extends ErrorResponse {
 
 
     public static ChangePasswordResponse success() {

@@ -24,7 +24,7 @@ public class AppEndpointInterceptor implements EndpointInterceptor {
         this.userRepository = userRepository;
     }
 
-    private Set<String> whiteList =  Set.of("RegisterUserRequest");
+    private Set<String> whiteList = Set.of("RegisterUserRequest");
 
     @Override
     public boolean handleRequest(MessageContext messageContext, Object endpoint) throws Exception {
@@ -44,11 +44,11 @@ public class AppEndpointInterceptor implements EndpointInterceptor {
         String password = getValue(body, "password");
 
         User user = userRepository.findByUsername(username).orElseThrow(() -> ExceptionWithStatusCode.error("user.or.password.invalid"));
-        if (!Utils.matches(password, user.getPassword())) throw ExceptionWithStatusCode.error("user.or.password.invalid");
+        if (!Utils.matches(password, user.getPassword()))
+            throw ExceptionWithStatusCode.error("user.or.password.invalid");
 
         return true;
     }
-
 
 
     @Override
@@ -58,6 +58,7 @@ public class AppEndpointInterceptor implements EndpointInterceptor {
 
     @Override
     public boolean handleFault(MessageContext messageContext, Object endpoint) throws Exception {
+        var message = messageContext;
         return false;
     }
 

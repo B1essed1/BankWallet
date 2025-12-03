@@ -3,7 +3,7 @@ package uz.sqb.bankwallet.dto.response;
 import jakarta.xml.bind.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
-import uz.sqb.bankwallet.dto.GenericResult;
+import uz.sqb.bankwallet.dto.ErrorResponse;
 import uz.sqb.bankwallet.dto.Parameter;
 import uz.sqb.bankwallet.utils.PUBLIC_STRINGS;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @XmlType(name = "GetInformationResponse", propOrder = {
     "parameters"
 })
-public class GetInformationResponse extends GenericResult {
+public class GetInformationResponse extends ErrorResponse {
 
     private List<Parameter> parameters = new ArrayList<>();
 }
