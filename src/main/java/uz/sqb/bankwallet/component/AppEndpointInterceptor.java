@@ -28,6 +28,7 @@ public class AppEndpointInterceptor implements EndpointInterceptor {
 
     @Override
     public boolean handleRequest(MessageContext messageContext, Object endpoint) throws Exception {
+
         SaajSoapMessage soapMessage = (SaajSoapMessage) messageContext.getRequest();
         SOAPBody body = soapMessage.getSaajMessage().getSOAPBody();
 

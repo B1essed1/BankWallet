@@ -3,10 +3,24 @@ package uz.sqb.bankwallet.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.sqb.bankwallet.dto.Parameter;
-import uz.sqb.bankwallet.dto.TransactionStatement;
-import uz.sqb.bankwallet.dto.request.*;
-import uz.sqb.bankwallet.dto.response.*;
+// OLD MANUAL CLASSES - COMMENTED OUT
+// import uz.sqb.bankwallet.dto.Parameter;
+// import uz.sqb.bankwallet.dto.TransactionStatement;
+// import uz.sqb.bankwallet.dto.request.*;
+// import uz.sqb.bankwallet.dto.response.*;
+// NEW XSD-GENERATED CLASSES
+import uz.sqb.bankwallet.generated.CancelTransactionRequest;
+import uz.sqb.bankwallet.generated.CancelTransactionResponse;
+import uz.sqb.bankwallet.generated.CheckTransactionRequest;
+import uz.sqb.bankwallet.generated.CheckTransactionResponse;
+import uz.sqb.bankwallet.generated.GetInformationRequest;
+import uz.sqb.bankwallet.generated.GetInformationResponse;
+import uz.sqb.bankwallet.generated.GetStatementRequest;
+import uz.sqb.bankwallet.generated.GetStatementResponse;
+import uz.sqb.bankwallet.generated.Parameter;
+import uz.sqb.bankwallet.generated.PerformTransactionRequest;
+import uz.sqb.bankwallet.generated.PerformTransactionResponse;
+import uz.sqb.bankwallet.generated.TransactionStatement;
 import uz.sqb.bankwallet.entity.Transaction;
 import uz.sqb.bankwallet.entity.User;
 import uz.sqb.bankwallet.entity.Wallet;
@@ -17,6 +31,7 @@ import uz.sqb.bankwallet.repository.UserRepository;
 import uz.sqb.bankwallet.repository.WalletRepository;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -66,11 +81,14 @@ public class TransactionService {
 
 
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(Parameter.setParameter("amount",String.valueOf(transaction.getAmount())));
-        parameters.add(Parameter.setParameter("transactionId",String.valueOf(transaction.getTransactionId())));
+        parameters.add(createParameter("amount", String.valueOf(transaction.getAmount())));
+        parameters.add(createParameter("transactionId", String.valueOf(transaction.getTransactionId())));
         PerformTransactionResponse result = new PerformTransactionResponse();
         result.setProviderTrnId(transaction.getId());
-        result.setParameters(parameters);
+        result.getParameters().addAll(parameters);
+        result.setStatus(0);
+        result.setErrorMsg("success");
+        result.setTimeStamp(String.valueOf(System.currentTimeMillis()));
         return result;
     }
 
@@ -82,21 +100,42 @@ public class TransactionService {
 
 
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(Parameter.setParameter("transactionId", String.valueOf(request.getTransactionId())));
-        parameters.add(Parameter.setParameter("providerTrnId", String.valueOf(transaction.getId())));
-        parameters.add(Parameter.setParameter("transactionStatus", String.valueOf(transaction.getStatus().ordinal())));
+        parameters.add(createParameter("transactionId", String.valueOf(request.getTransactionId())));
+        parameters.add(createParameter("providerTrnId", String.valueOf(transaction.getId())));
+        parameters.add(createParameter("transactionStatus", String.valueOf(transaction.getStatus().ordinal())));
 
         CheckTransactionResponse response = new CheckTransactionResponse();
-        response.setParameters(parameters);
+        response.getParameters().addAll(parameters);
         response.setStatus(0);
         response.setErrorMsg("success");
+        response.setTimeStamp(String.valueOf(System.currentTimeMillis()));
         return response;
     }
 
     public GetStatementResponse getStatement(GetStatementRequest request) {
-        List<TransactionStatement> statements = transactionRepository.findAllStatementByServiceId(request.getServiceId(), request.getDateFrom(), request.getDateTo());
+        // Convert dateFrom and dateTo from String to LocalDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        LocalDateTime dateFrom = LocalDateTime.parse(request.getDateFrom(), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(request.getDateTo(), formatter);
+
+        List<uz.sqb.bankwallet.dto.TransactionStatement> statements = transactionRepository.findAllStatementByServiceId(request.getServiceId(), dateFrom, dateTo);
+
+        // Convert to XSD-generated TransactionStatement objects
+        List<TransactionStatement> xsdStatements = new ArrayList<>();
+        for (uz.sqb.bankwallet.dto.TransactionStatement stmt : statements) {
+            TransactionStatement xsdStmt = new TransactionStatement();
+            xsdStmt.setAmount(stmt.getAmount());
+            xsdStmt.setProviderTrnId(stmt.getProviderTrnId());
+            xsdStmt.setTransactionId(stmt.getTransactionId());
+            xsdStmt.setTransactionTime(stmt.getTransactionTime().format(formatter));
+            xsdStatements.add(xsdStmt);
+        }
+
         GetStatementResponse result = new GetStatementResponse();
-        result.setTransactions(statements);
+        result.getTransactions().addAll(xsdStatements);
+        result.setStatus(0);
+        result.setErrorMsg("success");
+        result.setTimeStamp(String.valueOf(System.currentTimeMillis()));
         return result;
     }
 
@@ -108,15 +147,16 @@ public class TransactionService {
 
 
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(Parameter.setParameter("serviceId", String.valueOf(request.getServiceId())));
-        parameters.add(Parameter.setParameter("limit", String.valueOf(random.nextInt(124500000))));
-        parameters.add(Parameter.setParameter("phoneNumber", user.getPhoneNumber()));
-        parameters.add(Parameter.setParameter("walletNumber", user.getWallet().getWalletNumber()));
-
+        parameters.add(createParameter("serviceId", String.valueOf(request.getServiceId())));
+        parameters.add(createParameter("limit", String.valueOf(random.nextInt(124500000))));
+        parameters.add(createParameter("phoneNumber", user.getPhoneNumber()));
+        parameters.add(createParameter("walletNumber", user.getWallet().getWalletNumber()));
 
         GetInformationResponse response = new GetInformationResponse();
-        response.setParameters(parameters);
+        response.getParameters().addAll(parameters);
         response.setStatus(0);
+        response.setErrorMsg("success");
+        response.setTimeStamp(String.valueOf(System.currentTimeMillis()));
         return response;
     }
 
@@ -155,13 +195,16 @@ public class TransactionService {
 
 
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(Parameter.setParameter("transactionId", String.valueOf(transaction.getTransactionId())));
-        parameters.add(Parameter.setParameter("providerTrnId", String.valueOf(transaction.getId())));
-        parameters.add(Parameter.setParameter("transactionStatus", String.valueOf(transaction.getStatus().ordinal())));
-        parameters.add(Parameter.setParameter("amount", String.valueOf(transaction.getAmount())));
+        parameters.add(createParameter("transactionId", String.valueOf(transaction.getTransactionId())));
+        parameters.add(createParameter("providerTrnId", String.valueOf(transaction.getId())));
+        parameters.add(createParameter("transactionStatus", String.valueOf(transaction.getStatus().ordinal())));
+        parameters.add(createParameter("amount", String.valueOf(transaction.getAmount())));
 
         CancelTransactionResponse result = new CancelTransactionResponse();
-        result.setParameters(parameters);
+        result.getParameters().addAll(parameters);
+        result.setStatus(0);
+        result.setErrorMsg("success");
+        result.setTimeStamp(String.valueOf(System.currentTimeMillis()));
         return result;
     }
 
@@ -175,5 +218,13 @@ public class TransactionService {
             }
         }
         return null;
+    }
+
+    // Helper method to create Parameter objects from XSD-generated class
+    private Parameter createParameter(String key, String value) {
+        Parameter parameter = new Parameter();
+        parameter.setParamKey(key);
+        parameter.setParamValue(value);
+        return parameter;
     }
 }

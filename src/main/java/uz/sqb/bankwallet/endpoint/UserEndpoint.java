@@ -5,10 +5,16 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import uz.sqb.bankwallet.dto.request.ChangePasswordRequest;
-import uz.sqb.bankwallet.dto.request.RegisterUserRequest;
-import uz.sqb.bankwallet.dto.response.ChangePasswordResponse;
-import uz.sqb.bankwallet.dto.response.RegisterUserResponse;
+// OLD MANUAL CLASSES - COMMENTED OUT
+// import uz.sqb.bankwallet.dto.request.ChangePasswordRequest;
+// import uz.sqb.bankwallet.dto.request.RegisterUserRequest;
+// import uz.sqb.bankwallet.dto.response.ChangePasswordResponse;
+// import uz.sqb.bankwallet.dto.response.RegisterUserResponse;
+// NEW XSD-GENERATED CLASSES
+import uz.sqb.bankwallet.generated.ChangePasswordRequest;
+import uz.sqb.bankwallet.generated.ChangePasswordResponse;
+import uz.sqb.bankwallet.generated.RegisterUserRequest;
+import uz.sqb.bankwallet.generated.RegisterUserResponse;
 import uz.sqb.bankwallet.service.UserService;
 
 import static uz.sqb.bankwallet.utils.PUBLIC_STRINGS.NAMESPACE_URI;

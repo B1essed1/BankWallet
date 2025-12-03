@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://uws.provider.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://uws.provider.com/"
+             name="BankWalletService">
+
+    <!-- Types -->
+    <types>
+        <xsd:schema>
+            <xsd:import namespace="http://uws.provider.com/"
+                       schemaLocation="bankwallet.xsd"/>
+        </xsd:schema>
+    </types>
+
+    <!-- Messages for User Operations -->
+    <message name="RegisterUserRequestMessage">
+        <part name="parameters" element="tns:RegisterUserRequest"/>
+    </message>
+    <message name="RegisterUserResponseMessage">
+        <part name="parameters" element="tns:RegisterUserResponse"/>
+    </message>
+
+    <message name="ChangePasswordRequestMessage">
+        <part name="parameters" element="tns:ChangePasswordRequest"/>
+    </message>
+    <message name="ChangePasswordResponseMessage">
+        <part name="parameters" element="tns:ChangePasswordResponse"/>
+    </message>
+
+    <!-- Messages for Transaction Operations -->
+    <message name="PerformTransactionRequestMessage">
+        <part name="parameters" element="tns:PerformTransactionRequest"/>
+    </message>
+    <message name="PerformTransactionResponseMessage">
+        <part name="parameters" element="tns:PerformTransactionResponse"/>
+    </message>
+
+    <message name="CheckTransactionRequestMessage">
+        <part name="parameters" element="tns:CheckTransactionRequest"/>
+    </message>
+    <message name="CheckTransactionResponseMessage">
+        <part name="parameters" element="tns:CheckTransactionResponse"/>
+    </message>
+
+    <message name="CancelTransactionRequestMessage">
+        <part name="parameters" element="tns:CancelTransactionRequest"/>
+    </message>
+    <message name="CancelTransactionResponseMessage">
+        <part name="parameters" element="tns:CancelTransactionResponse"/>
+    </message>
+
+    <message name="GetStatementRequestMessage">
+        <part name="parameters" element="tns:GetStatementRequest"/>
+    </message>
+    <message name="GetStatementResponseMessage">
+        <part name="parameters" element="tns:GetStatementResponse"/>
+    </message>
+
+    <message name="GetInformationRequestMessage">
+        <part name="parameters" element="tns:GetInformationRequest"/>
+    </message>
+    <message name="GetInformationResponseMessage">
+        <part name="parameters" element="tns:GetInformationResponse"/>
+    </message>
+
+    <!-- Port Type for User Operations -->
+    <portType name="UserServicePortType">
+        <operation name="RegisterUser">
+            <input message="tns:RegisterUserRequestMessage"/>
+            <output message="tns:RegisterUserResponseMessage"/>
+        </operation>
+        <operation name="ChangePassword">
+            <input message="tns:ChangePasswordRequestMessage"/>
+            <output message="tns:ChangePasswordResponseMessage"/>
+        </operation>
+    </portType>
+
+    <!-- Port Type for Transaction Operations -->
+    <portType name="TransactionServicePortType">
+        <operation name="PerformTransaction">
+            <input message="tns:PerformTransactionRequestMessage"/>
+            <output message="tns:PerformTransactionResponseMessage"/>
+        </operation>
+        <operation name="CheckTransaction">
+            <input message="tns:CheckTransactionRequestMessage"/>
+            <output message="tns:CheckTransactionResponseMessage"/>
+        </operation>
+        <operation name="CancelTransaction">
+            <input message="tns:CancelTransactionRequestMessage"/>
+            <output message="tns:CancelTransactionResponseMessage"/>
+        </operation>
+        <operation name="GetStatement">
+            <input message="tns:GetStatementRequestMessage"/>
+            <output message="tns:GetStatementResponseMessage"/>
+        </operation>
+        <operation name="GetInformation">
+            <input message="tns:GetInformationRequestMessage"/>
+            <output message="tns:GetInformationResponseMessage"/>
+        </operation>
+    </portType>
+
+    <!-- Binding for User Service -->
+    <binding name="UserServiceSoapBinding" type="tns:UserServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="RegisterUser">
+            <soap:operation soapAction="http://uws.provider.com/RegisterUser"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="ChangePassword">
+            <soap:operation soapAction="http://uws.provider.com/ChangePassword"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Binding for Transaction Service -->
+    <binding name="TransactionServiceSoapBinding" type="tns:TransactionServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="PerformTransaction">
+            <soap:operation soapAction="http://uws.provider.com/PerformTransaction"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="CheckTransaction">
+            <soap:operation soapAction="http://uws.provider.com/CheckTransaction"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="CancelTransaction">
+            <soap:operation soapAction="http://uws.provider.com/CancelTransaction"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetStatement">
+            <soap:operation soapAction="http://uws.provider.com/GetStatement"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetInformation">
+            <soap:operation soapAction="http://uws.provider.com/GetInformation"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Service -->
+    <service name="BankWalletService">
+        <documentation>Bank Wallet SOAP Web Service</documentation>
+        <port name="UserServicePort" binding="tns:UserServiceSoapBinding">
+            <soap:address location="http://localhost:8080/ws/UserService"/>
+        </port>
+        <port name="TransactionServicePort" binding="tns:TransactionServiceSoapBinding">
+            <soap:address location="http://localhost:8080/ws/TransactionService"/>
+        </port>
+    </service>
+
+</definitions>

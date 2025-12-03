@@ -122,6 +122,29 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <!-- JAXB2 Maven Plugin to generate Java classes from XSD -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <id>xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sources>
+                        <source>${project.basedir}/src/main/resources/bankwallet.xsd</source>
+                    </sources>
+                    <outputDirectory>${project.basedir}/target/generated-sources/jaxb</outputDirectory>
+                    <clearOutputDir>false</clearOutputDir>
+                    <packageName>uz.sqb.bankwallet.generated</packageName>
+                    <extension>true</extension>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
