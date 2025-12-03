@@ -34,204 +34,208 @@
     <!-- TransactionStatement - Transaction details -->
     <xs:complexType name="TransactionStatement">
         <xs:sequence>
-            <xs:element name="amount" type="xs:long"/>
-            <xs:element name="providerTrnId" type="xs:long"/>
-            <xs:element name="transactionId" type="xs:long"/>
+            <xs:element name="amount" type="xs:long" nillable="true"/>
+            <xs:element name="providerTrnId" type="xs:long" nillable="true"/>
+            <xs:element name="transactionId" type="xs:long" nillable="true"/>
             <xs:element name="transactionTime" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
-    <!-- Request Types -->
+    <!-- Root Elements for SOAP Messages - These will get @XmlRootElement -->
 
     <!-- RegisterUserRequest -->
-    <xs:complexType name="RegisterUserRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="phoneNumber" type="xs:string"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- ChangePasswordRequest -->
-    <xs:complexType name="ChangePasswordRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="newPassword" type="xs:string"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- PerformTransactionRequest -->
-    <xs:complexType name="PerformTransactionRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="amount" type="xs:long"/>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
-                    <xs:element name="transactionId" type="xs:long" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- CheckTransactionRequest -->
-    <xs:complexType name="CheckTransactionRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
-                    <xs:element name="transactionId" type="xs:long"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- CancelTransactionRequest -->
-    <xs:complexType name="CancelTransactionRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
-                    <xs:element name="transactionId" type="xs:long" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- GetStatementRequest -->
-    <xs:complexType name="GetStatementRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="serviceId" type="xs:long"/>
-                    <xs:element name="dateFrom" type="xs:string"/>
-                    <xs:element name="dateTo" type="xs:string"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- GetInformationRequest -->
-    <xs:complexType name="GetInformationRequest">
-        <xs:complexContent>
-            <xs:extension base="tns:GenericAuthRequest">
-                <xs:sequence>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- Response Types -->
+    <xs:element name="RegisterUserRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="phoneNumber" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- RegisterUserResponse -->
-    <xs:complexType name="RegisterUserResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="username" type="xs:string" minOccurs="0"/>
-                    <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
-                    <xs:element name="walletNumber" type="xs:string" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="RegisterUserResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="username" type="xs:string" minOccurs="0"/>
+                        <xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+                        <xs:element name="walletNumber" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ChangePasswordRequest -->
+    <xs:element name="ChangePasswordRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="newPassword" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- ChangePasswordResponse -->
-    <xs:complexType name="ChangePasswordResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <!-- No additional fields, inherits from ErrorResponse -->
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="ChangePasswordResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <!-- No additional fields, inherits from ErrorResponse -->
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- PerformTransactionRequest -->
+    <xs:element name="PerformTransactionRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="amount" type="xs:long" nillable="true"/>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
+                        <xs:element name="transactionId" type="xs:long" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- PerformTransactionResponse -->
-    <xs:complexType name="PerformTransactionResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="providerTrnId" type="xs:long" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="PerformTransactionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="providerTrnId" type="xs:long" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- CheckTransactionRequest -->
+    <xs:element name="CheckTransactionRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
+                        <xs:element name="transactionId" type="xs:long" nillable="true"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- CheckTransactionResponse -->
-    <xs:complexType name="CheckTransactionResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="providerTrnId" type="xs:long" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="CheckTransactionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="providerTrnId" type="xs:long" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- CancelTransactionRequest -->
+    <xs:element name="CancelTransactionRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
+                        <xs:element name="transactionId" type="xs:long" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- CancelTransactionResponse -->
-    <xs:complexType name="CancelTransactionResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="CancelTransactionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- GetStatementRequest -->
+    <xs:element name="GetStatementRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="serviceId" type="xs:long" nillable="true"/>
+                        <xs:element name="dateFrom" type="xs:string"/>
+                        <xs:element name="dateTo" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- GetStatementResponse -->
-    <xs:complexType name="GetStatementResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <xs:element name="transactions" type="tns:TransactionStatement" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    <xs:element name="GetStatementResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <xs:element name="transactions" type="tns:TransactionStatement" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- GetInformationRequest -->
+    <xs:element name="GetInformationRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:GenericAuthRequest">
+                    <xs:sequence>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="serviceId" type="xs:long" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
     <!-- GetInformationResponse -->
-    <xs:complexType name="GetInformationResponse">
-        <xs:complexContent>
-            <xs:extension base="tns:ErrorResponse">
-                <xs:sequence>
-                    <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- Root Elements for SOAP Messages -->
-    <xs:element name="RegisterUserRequest" type="tns:RegisterUserRequest"/>
-    <xs:element name="RegisterUserResponse" type="tns:RegisterUserResponse"/>
-
-    <xs:element name="ChangePasswordRequest" type="tns:ChangePasswordRequest"/>
-    <xs:element name="ChangePasswordResponse" type="tns:ChangePasswordResponse"/>
-
-    <xs:element name="PerformTransactionRequest" type="tns:PerformTransactionRequest"/>
-    <xs:element name="PerformTransactionResponse" type="tns:PerformTransactionResponse"/>
-
-    <xs:element name="CheckTransactionRequest" type="tns:CheckTransactionRequest"/>
-    <xs:element name="CheckTransactionResponse" type="tns:CheckTransactionResponse"/>
-
-    <xs:element name="CancelTransactionRequest" type="tns:CancelTransactionRequest"/>
-    <xs:element name="CancelTransactionResponse" type="tns:CancelTransactionResponse"/>
-
-    <xs:element name="GetStatementRequest" type="tns:GetStatementRequest"/>
-    <xs:element name="GetStatementResponse" type="tns:GetStatementResponse"/>
-
-    <xs:element name="GetInformationRequest" type="tns:GetInformationRequest"/>
-    <xs:element name="GetInformationResponse" type="tns:GetInformationResponse"/>
+    <xs:element name="GetInformationResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                    <xs:sequence>
+                        <xs:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>

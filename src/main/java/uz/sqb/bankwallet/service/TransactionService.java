@@ -118,11 +118,11 @@ public class TransactionService {
         LocalDateTime dateFrom = LocalDateTime.parse(request.getDateFrom(), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(request.getDateTo(), formatter);
 
-        List<uz.sqb.bankwallet.dto.TransactionStatement> statements = transactionRepository.findAllStatementByServiceId(request.getServiceId(), dateFrom, dateTo);
+        List<uz.sqb.bankwallet.generated.TransactionStatement> statements = transactionRepository.findAllStatementByServiceId(request.getServiceId(), dateFrom, dateTo);
 
         // Convert to XSD-generated TransactionStatement objects
         List<TransactionStatement> xsdStatements = new ArrayList<>();
-        for (uz.sqb.bankwallet.dto.TransactionStatement stmt : statements) {
+        for (uz.sqb.bankwallet.generated.TransactionStatement stmt : statements) {
             TransactionStatement xsdStmt = new TransactionStatement();
             xsdStmt.setAmount(stmt.getAmount());
             xsdStmt.setProviderTrnId(stmt.getProviderTrnId());

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.server.EndpointExceptionResolver;
 import org.springframework.ws.soap.SoapMessage;
-import uz.sqb.bankwallet.dto.ErrorResponse;
 import uz.sqb.bankwallet.exception.ExceptionWithStatusCode;
+import uz.sqb.bankwallet.generated.ErrorResponse;
 
 @Component
 public class SoapExceptionHandler implements EndpointExceptionResolver {
