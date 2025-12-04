@@ -8,9 +8,244 @@
 
     <!-- Types -->
     <types>
-        <xsd:schema>
-            <xsd:import namespace="http://uws.provider.com/"
-                       schemaLocation="bankwallet.xsd"/>
+        <xsd:schema xmlns:tns="http://uws.provider.com/"
+                    targetNamespace="http://uws.provider.com/"
+                    elementFormDefault="qualified">
+
+            <!-- Base Complex Types -->
+
+            <!-- GenericAuthRequest - Base type for all authenticated requests -->
+            <xsd:complexType name="GenericAuthRequest">
+                <xsd:sequence>
+                    <xsd:element name="username" type="xsd:string"/>
+                    <xsd:element name="password" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- ErrorResponse - Base type for all responses -->
+            <xsd:complexType name="ErrorResponse">
+                <xsd:sequence>
+                    <xsd:element name="status" type="xsd:int"/>
+                    <xsd:element name="errorMsg" type="xsd:string"/>
+                    <xsd:element name="timeStamp" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Parameter - Key-value pair -->
+            <xsd:complexType name="Parameter">
+                <xsd:sequence>
+                    <xsd:element name="paramKey" type="xsd:string"/>
+                    <xsd:element name="paramValue" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- TransactionStatement - Transaction details -->
+            <xsd:complexType name="TransactionStatement">
+                <xsd:sequence>
+                    <xsd:element name="amount" type="xsd:long" nillable="true"/>
+                    <xsd:element name="providerTrnId" type="xsd:long" nillable="true"/>
+                    <xsd:element name="transactionId" type="xsd:long" nillable="true"/>
+                    <xsd:element name="transactionTime" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Root Elements for SOAP Messages - These will get @XmlRootElement -->
+
+            <!-- RegisterUserRequest -->
+            <xsd:element name="RegisterUserRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="phoneNumber" type="xsd:string"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- RegisterUserResponse -->
+            <xsd:element name="RegisterUserResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                                <xsd:element name="username" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="phoneNumber" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="walletNumber" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- ChangePasswordRequest -->
+            <xsd:element name="ChangePasswordRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="newPassword" type="xsd:string"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- ChangePasswordResponse -->
+            <xsd:element name="ChangePasswordResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <!-- No additional fields, inherits from ErrorResponse -->
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- PerformTransactionRequest -->
+            <xsd:element name="PerformTransactionRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="amount" type="xsd:long" nillable="true"/>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                                <xsd:element name="serviceId" type="xsd:long" minOccurs="0"/>
+                                <xsd:element name="transactionId" type="xsd:long" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- PerformTransactionResponse -->
+            <xsd:element name="PerformTransactionResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                                <xsd:element name="providerTrnId" type="xsd:long" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- CheckTransactionRequest -->
+            <xsd:element name="CheckTransactionRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="serviceId" type="xsd:long" minOccurs="0"/>
+                                <xsd:element name="transactionId" type="xsd:long" nillable="true"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- CheckTransactionResponse -->
+            <xsd:element name="CheckTransactionResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                                <xsd:element name="providerTrnId" type="xsd:long" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- CancelTransactionRequest -->
+            <xsd:element name="CancelTransactionRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="serviceId" type="xsd:long" minOccurs="0"/>
+                                <xsd:element name="transactionId" type="xsd:long" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- CancelTransactionResponse -->
+            <xsd:element name="CancelTransactionResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- GetStatementRequest -->
+            <xsd:element name="GetStatementRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="serviceId" type="xsd:long" nillable="true"/>
+                                <xsd:element name="dateFrom" type="xsd:string"/>
+                                <xsd:element name="dateTo" type="xsd:string"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- GetStatementResponse -->
+            <xsd:element name="GetStatementResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <xsd:element name="transactions" type="tns:TransactionStatement" minOccurs="0" maxOccurs="unbounded"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- GetInformationRequest -->
+            <xsd:element name="GetInformationRequest">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:GenericAuthRequest">
+                            <xsd:sequence>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                                <xsd:element name="serviceId" type="xsd:long" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- GetInformationResponse -->
+            <xsd:element name="GetInformationResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                            <xsd:sequence>
+                                <xsd:element name="parameters" type="tns:Parameter" minOccurs="0" maxOccurs="unbounded"/>
+                            </xsd:sequence>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
         </xsd:schema>
     </types>
 

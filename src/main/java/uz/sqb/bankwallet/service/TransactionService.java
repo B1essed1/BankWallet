@@ -1,6 +1,6 @@
 package uz.sqb.bankwallet.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 // OLD MANUAL CLASSES - COMMENTED OUT
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 // import uz.sqb.bankwallet.dto.request.*;
 // import uz.sqb.bankwallet.dto.response.*;
 // NEW XSD-GENERATED CLASSES
+import uz.sqb.bankwallet.data.TransactionStatementDto;
 import uz.sqb.bankwallet.generated.CancelTransactionRequest;
 import uz.sqb.bankwallet.generated.CancelTransactionResponse;
 import uz.sqb.bankwallet.generated.CheckTransactionRequest;
@@ -42,8 +43,8 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
-    private static final Random random = new Random();
     private final WalletRepository walletRepository;
+    private static final Random random = new Random();
 
     @Transactional
     public PerformTransactionResponse performTransaction(PerformTransactionRequest request) {
@@ -118,11 +119,11 @@ public class TransactionService {
         LocalDateTime dateFrom = LocalDateTime.parse(request.getDateFrom(), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(request.getDateTo(), formatter);
 
-        List<uz.sqb.bankwallet.generated.TransactionStatement> statements = transactionRepository.findAllStatementByServiceId(request.getServiceId(), dateFrom, dateTo);
+        List<uz.sqb.bankwallet.data.TransactionStatementDto> statements = transactionRepository.findAllStatementByServiceId(request.getServiceId(), dateFrom, dateTo);
 
         // Convert to XSD-generated TransactionStatement objects
         List<TransactionStatement> xsdStatements = new ArrayList<>();
-        for (uz.sqb.bankwallet.generated.TransactionStatement stmt : statements) {
+        for (TransactionStatementDto stmt : statements) {
             TransactionStatement xsdStmt = new TransactionStatement();
             xsdStmt.setAmount(stmt.getAmount());
             xsdStmt.setProviderTrnId(stmt.getProviderTrnId());
