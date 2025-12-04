@@ -1,5 +1,13 @@
 # BankWallet
 
+# How to use
+
+- first need to create user from RegisterUserRequest
+  which does have request example in REQUESTS.MD
+- then from that you can use everything with that user
+
+
+
 A Spring Boot application for managing bank wallet operations.
 
 ## Prerequisites
@@ -18,12 +26,6 @@ Click the command below or copy and run it in your terminal:
 docker run --name bankwallet-postgres -e POSTGRES_DB=bankwallet_db -e POSTGRES_USER=bankwallet_user -e POSTGRES_PASSWORD=bankwallet_pass -p 5432:5432 -d postgres:15
 ```
 
-This command will:
-- Create a PostgreSQL container named `bankwallet-postgres`
-- Create a database named `bankwallet_db`
-- Create a user `bankwallet_user` with password `bankwallet_pass`
-- Expose PostgreSQL on port `5432`
-- Run in detached mode
 
 ### Database Configuration
 
@@ -35,52 +37,20 @@ The application is configured to connect to PostgreSQL with the following settin
 - **Port**: `5432`
 - **Host**: `localhost`
 
-### Useful Docker Commands
-
-**Stop the database:**
-```bash
-docker stop bankwallet-postgres
-```
-
-**Start the database:**
-```bash
-docker start bankwallet-postgres
-```
-
-**Remove the database container:**
-```bash
-docker rm -f bankwallet-postgres
-```
-
-**View database logs:**
-```bash
-docker logs bankwallet-postgres
-```
-
-**Access PostgreSQL CLI:**
-```bash
-docker exec -it bankwallet-postgres psql -U bankwallet_user -d bankwallet_db
-```
-
-## Running the Application
-
-1. Start the PostgreSQL database using the Docker command above
-2. Run the application:
-   ```bash
-   mvn spring-boot:run
-   ```
-
 ## API Documentation
 
 Once the application is running, you can access the Swagger UI at:
+## WSDL
 ```
+http://localhost:8080/ws/bankwallet.wsdl
 
 ```
 
 ## Build
+First need to compile project for generating xsd classes
 
 ```bash
-mvn clean package
+mvn clean compile
 ```
 
 ## Technologies Used
@@ -90,3 +60,5 @@ mvn clean package
 - PostgreSQL
 - Spring Data JPA
 - Lombok
+
+

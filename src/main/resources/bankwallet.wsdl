@@ -80,6 +80,15 @@
                 </xsd:complexType>
             </xsd:element>
 
+            <xsd:element name="GeneralErrorResponse">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="tns:ErrorResponse">
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+
             <!-- ChangePasswordRequest -->
             <xsd:element name="ChangePasswordRequest">
                 <xsd:complexType>

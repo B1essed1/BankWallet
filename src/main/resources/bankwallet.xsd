@@ -238,4 +238,13 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="GeneralErrorResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:ErrorResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>

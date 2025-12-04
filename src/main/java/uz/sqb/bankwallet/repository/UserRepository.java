@@ -31,7 +31,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByUsername(String phoneNumber);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select u from User u join fetch u.wallet where u.serviceId = :serviceId")
-    Optional<User> findByServiceId(@Param("serviceId") Long serviceId);
+    Optional<User> findByServiceId(Long serviceId);
 }

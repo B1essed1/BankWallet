@@ -15,13 +15,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true, nullable = false)
     private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.PERSIST)
@@ -29,7 +29,7 @@ public class User {
     @XmlTransient
     private Wallet wallet;
 
-    @Column(name = "service_id")
+    @Column(name = "service_id",unique = true, nullable = false)
     private Long serviceId;
 
 }

@@ -1,22 +1,16 @@
 package uz.sqb.bankwallet.service;
 
 import org.springframework.stereotype.Service;
-// OLD MANUAL CLASSES - COMMENTED OUT
-// import uz.sqb.bankwallet.dto.request.ChangePasswordRequest;
-// import uz.sqb.bankwallet.dto.request.RegisterUserRequest;
-// import uz.sqb.bankwallet.dto.response.ChangePasswordResponse;
-// import uz.sqb.bankwallet.dto.response.RegisterUserResponse;
-// NEW XSD-GENERATED CLASSES
-import uz.sqb.bankwallet.generated.ChangePasswordRequest;
-import uz.sqb.bankwallet.generated.ChangePasswordResponse;
-import uz.sqb.bankwallet.generated.RegisterUserRequest;
-import uz.sqb.bankwallet.generated.RegisterUserResponse;
 import uz.sqb.bankwallet.entity.User;
 import uz.sqb.bankwallet.entity.Wallet;
 import uz.sqb.bankwallet.exception.ExceptionWithStatusCode;
+import uz.sqb.bankwallet.generated.*;
 import uz.sqb.bankwallet.repository.UserRepository;
 import uz.sqb.bankwallet.repository.WalletRepository;
 import uz.sqb.bankwallet.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -45,7 +39,7 @@ public class UserService {
 
     public RegisterUserResponse registerUser(RegisterUserRequest request) {
 
-        if (!Utils.isValidPhoneNumber(request.getPhoneNumber())) {
+        if (!Utils.isValidPhoneNumber(request.getPhoneNumber().trim())) {
             throw ExceptionWithStatusCode.error("wrong.phone.number.format");
         }
 
@@ -73,15 +67,20 @@ public class UserService {
         user.setUsername(request.getUsername());
         user.setPassword(Utils.encode(request.getPassword()));
         user.setPhoneNumber(request.getPhoneNumber());
+        user.setServiceId(System.currentTimeMillis());
 
         user.setWallet(wallet);
         wallet.setUser(user);
         userRepository.save(user);
 
+        List<Parameter>  parameters = new ArrayList<>();
+        parameters.add(createParameter("serviceId", String.valueOf(user.getServiceId())));
+
         // Create response using XSD-generated class
         RegisterUserResponse response = new RegisterUserResponse();
         response.setUsername(user.getUsername());
         response.setPhoneNumber(user.getPhoneNumber());
+        response.getParameters().addAll(parameters);
         response.setWalletNumber(user.getWallet().getWalletNumber());
         response.setStatus(0);
         response.setErrorMsg("success");
@@ -90,4 +89,12 @@ public class UserService {
     }
 
 
+
+
+    private Parameter createParameter(String key, String value) {
+        Parameter parameter = new Parameter();
+        parameter.setParamKey(key);
+        parameter.setParamValue(value);
+        return parameter;
+    }
 }

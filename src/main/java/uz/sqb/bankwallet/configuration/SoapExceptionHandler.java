@@ -8,6 +8,7 @@ import org.springframework.ws.server.EndpointExceptionResolver;
 import org.springframework.ws.soap.SoapMessage;
 import uz.sqb.bankwallet.exception.ExceptionWithStatusCode;
 import uz.sqb.bankwallet.generated.ErrorResponse;
+import uz.sqb.bankwallet.generated.GeneralErrorResponse;
 
 @Component
 public class SoapExceptionHandler implements EndpointExceptionResolver {
@@ -15,7 +16,7 @@ public class SoapExceptionHandler implements EndpointExceptionResolver {
     @Override
     public boolean resolveException(MessageContext messageContext, Object endpoint, Exception ex) {
         try {
-            ErrorResponse result = new ErrorResponse();
+            GeneralErrorResponse result = new GeneralErrorResponse();
 
             if (ex instanceof ExceptionWithStatusCode e) {
                 result.setStatus(e.getHttpStatusCode() != null ? e.getHttpStatusCode() : 400);
